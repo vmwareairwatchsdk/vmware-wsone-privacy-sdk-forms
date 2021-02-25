@@ -1,80 +1,31 @@
-# **vm**ware Workspace ONE Privacy for Xamarin.Forms
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WorkspaceOne.Privacy.Forms;
+using Xamarin.Forms;
+using PrivacyController = WorkspaceOne.Privacy.Forms.Privacy;
 
-This documentation will cover the [installation](#installation), [setup](#setup) and [usage](#usage) of the privacy module for Workspace ONE in Xamarin Forms.
-
-For details on Privacy SDK refer to [For iOS](https://code.vmware.com/docs/10005/sdk-privacy-module-for-ios--swift--developer-guide/GUID-A8CA007C-29FD-4A11-AD2A-9843A0032015.html?h=Privacy) and [For Android](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/SDK_Android_Privacy/GUID-14C5AF5B-2E54-4E49-ABBA-B59360BD77F9.html) 
-
-## Installation
-
-The SDK should be installed using **Nuget**.
-
-- **WorkspaceOne.Privacy.Forms**: This is the package to be used in your Xamarin Forms app. It will provide interfaces for the initialization, setup and usage of the Workspace ONE Privacy module from your Xamarin Forms app.
-
-Add this nuget package to your Xamarin.Forms project and to your iOS and Android project of the the Xamarin.Forms app as well.
-
-Add the appropriate packages to your solution for each app project. Then continue to the [setup](#setup) step for [Android](#android) and [iOS](#ios).
-
-
-## Setup
-
-Before using the privacy module, just like many other Xamarin Forms packages it's dependencies need to be initialized first.
-
-### Android
-
-In the `MainActivity.cs`'s `OnCreate` (where most other packages get initialized as well) add the following code:
-
-```
-    protected override void OnCreate(Bundle savedInstanceState)
+namespace WorkspaceOne.Privacy.Example
+{
+    // Learn more about making custom code visible in the Xamarin.Forms previewer
+    // by visiting https://aka.ms/xamarinforms-previewer
+    [DesignTimeVisible(false)]
+    public partial class MainPage : ContentPage
+    {
+        public MainPage()
         {
-            TabLayoutResource = Resource.Layout.Tabbar;
-            ToolbarResource = Resource.Layout.Toolbar;
+            InitializeComponent();
 
-            base.OnCreate(savedInstanceState);
-
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
-            Privacy.Android.Forms.Privacy.Instance.Init(global::Android.App.Application.Context, "Example");
-
-            LoadApplication(new App());
+            previewButton.Clicked += HandlePreviewButtonClicked;
+            privacyButton.Clicked += HandlePrivacyButtonClicked;
+            resetButton.Clicked += HandleResetButtonClicked;
         }
 
-```
-
-
-Replace *"Example"* with the name of the Android preferences file for you project.
-
-### iOS
-
-In the `AppDelegate.cs`'s `FinishedLaunching` (just where most other packages get initialized as well) add the following code:
-
-```
-    public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-        {
-            global::Xamarin.Forms.Forms.Init();
-
-            Privacy.iOS.Forms.Privacy.Instance.Init();
-
-            LoadApplication(new App());
-
-            return base.FinishedLaunching(app, options);
-        }
-```
-### Forms
-
-There is no extra initialization step required in your Xamarin.Forms app and you can continue to [usage](#usage).
-
-## Usage
-
-In your Xamarin Forms app you can use the privacy module at any point in time you see fit during the run time of your app.
-
-### Privacy Configuration
-
-You can creatre your own privacy configuration with miss f pre-defined content and customs content.
-
-```
-
-    private AWPrivacyConfig GetConfig()
+        private AWPrivacyConfig GetConfig()
         {
             var privacyConfig = new AWPrivacyConfig
             {
@@ -140,35 +91,25 @@ You can creatre your own privacy configuration with miss f pre-defined content a
             return privacyConfig;
         }
 
-```
+        private void HandlePreviewButtonClicked(object sender, EventArgs e)
+        {
+            PrivacyController.Instance.PreviewPrivacy(GetConfig(), (AWPrivacyResult result) =>
+            {
+                Debug.WriteLine(result);
+            });
+        }
 
-### Privacy Flow
+        private void HandlePrivacyButtonClicked(object sender, EventArgs e)
+        {
+            PrivacyController.Instance.StartPrivacyFlow(GetConfig(), (AWPrivacyResult result) =>
+            {
+                Debug.WriteLine(result);
+            });
+        }
 
-To start the Privacy Flow your need to call the following code.
-
-```
-    PrivacyController.Instance.PreviewPrivacy(GetConfig(), (AWPrivacyResult result) =>
-    {
-        Debug.WriteLine(result);
-    });
-```
-
-
-### Privacy Preview
-
-To preview the configured Privacy content
-
-```
-    PrivacyController.Instance.StartPrivacyFlow(GetConfig(), (AWPrivacyResult result) =>
-    {
-        Debug.WriteLine(result);
-    });
-```
-
-### Reset
-
-You can clear the Privacy content using reset.
-
-```
-PrivacyController.Instance.Reset();
-```
+        private void HandleResetButtonClicked(object sender, EventArgs e)
+        {
+            PrivacyController.Instance.Reset();
+        }
+    }
+}
