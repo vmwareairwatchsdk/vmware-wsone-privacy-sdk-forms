@@ -2,7 +2,7 @@
 
 This documentation will cover the [installation](#installation), [setup](#setup) and [usage](#usage) of the privacy module for Workspace ONE in Xamarin Forms.
 
-For details on Privacy SDK refer to [For iOS](https://code.vmware.com/docs/10005/sdk-privacy-module-for-ios--swift--developer-guide/GUID-A8CA007C-29FD-4A11-AD2A-9843A0032015.html?h=Privacy) and [For Android](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/   SDK_Android_Privacy/GUID-14C5AF5B-2E54-4E49-ABBA-B59360BD77F9.html) 
+For details on Privacy SDK refer to [For iOS](https://code.vmware.com/docs/10005/sdk-privacy-module-for-ios--swift--developer-guide/GUID-A8CA007C-29FD-4A11-AD2A-9843A0032015.html?h=Privacy) and [For Android](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/SDK_Android_Privacy/GUID-14C5AF5B-2E54-4E49-ABBA-B59360BD77F9.html) 
 
 ## Installation
 
