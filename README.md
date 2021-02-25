@@ -1,4 +1,4 @@
-# **vm**ware Workspace ONE Privacy for Xamarin.Forms
+# **VM**ware Workspace ONE Privacy SDK for Xamarin.Forms
 
 This documentation will cover the [installation](#installation), [setup](#setup) and [usage](#usage) of the privacy module for Workspace ONE in Xamarin Forms.
 
